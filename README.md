@@ -1,0 +1,2 @@
+# A-Critical-Study-on-the-Infeasibility-of-Stock-Prediction-Using-Machine-Learning
+This paper argues that reliable stock prediction using machine learning is infeasible. We show that LSTM models fail to outperform naive baselines, despite high \( R^2 \) scores. Sentiment features add no value, aligning with the Efficient Market Hypothesis. ML struggles with the noisy, adversarial nature of financial markets.
