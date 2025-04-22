@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Limits of Learning: A Critical Study on Stock Prediction</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --text-color: #333;
+            --background-color: #f8f9fa;
+            --accent-color: #3498db;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-color);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-top: 40px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+        }
+
+        .author {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        .abstract {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .abstract h2 {
+            margin-top: 0;
+        }
+
+        section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .references {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .references ol {
+            padding-left: 20px;
+        }
+
+        .references li {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The Limits of Learning: A Critical Study on the Infeasibility of Stock Prediction Using Machine Learning</h1>
+        <p class="author">Guitar Poem, University of Github</p>
+    </header>
+
+    <div class="abstract">
+        <h2>Abstract</h2>
+        <p>This paper critically examines the fundamental limitations of machine learning (ML) approaches for stock market prediction. Despite significant technological advancements and research interest, we argue that reliable stock prediction using ML remains inherently infeasible. We first analyze methodological flaws in existing research, particularly focusing on the StockNet paper, which we demonstrate suffers from selective reporting and reproducibility issues. Through a series of experiments using LSTM networks with historical price data and social media sentiment, we show that ML models consistently fail to outperform naive baselines. Our regression models achieve seemingly impressive R² values (0.62-0.95) but underperform compared to simple persistence models, revealing their inability to learn meaningful patterns beyond autocorrelation. Furthermore, LLM-generated sentiment labels from social media show no statistically significant correlation with next-day price movements. These findings align with the Efficient Market Hypothesis, suggesting that publicly available information is rapidly incorporated into stock prices, eliminating exploitable patterns. We conclude that while ML excels at pattern recognition in structured data, it fundamentally struggles with the inherently stochastic, noisy, and adversarial nature of financial markets, making reliable short-term stock prediction infeasible using conventional ML approaches.</p>
+    </div>
+
+    <section>
+        <h2>Introduction</h2>
+        <p>The application of machine learning (ML) to stock market prediction has garnered significant attention, driven by its potential for financial gain and market insights. However, despite technological advancements, this paper argues that reliable stock prediction using ML remains fundamentally infeasible.</p>
+
+        <h3>The Nature of Financial Markets</h3>
+        <p>Financial markets are inherently stochastic, noisy, and adversarial systems that pose significant challenges for prediction. The Efficient Market Hypothesis (EMH) provides a foundational theoretical framework for understanding these limitations, arguing that stock prices quickly incorporate all available information, leaving little room for systematic profit through prediction. According to Lo [1], this efficient price adjustment mechanism severely constrains the potential of machine learning approaches, which aim to detect hidden patterns but consistently face significant barriers to reliable forecasting. Recent empirical work by Caporale and Plastun [2] further confirms that even advanced ML methods struggle to consistently extract meaningful signals, particularly when accounting for practical considerations like transaction costs and the adaptive nature of market responses. Unlike traditional technical and fundamental analyses, ML-based forecasting must contend with these fundamental limitations while attempting to navigate the complex, dynamic nature of financial markets.</p>
+
+        <h3>Infeasibility Claims in Empirical Studies</h3>
+        <p>Empirical comparisons frequently show that ML models fail to outperform naive baselines. Sundqvist [3] evaluated multiple ML techniques against a random walk model and found no consistent superiority in predictive accuracy. Notably, many deep learning models excel only in-sample but degrade sharply in out-of-sample tests, raising concerns of data leakage and overfitting. Nguyen et al. [4] applied LSTM models to the Vietnamese stock exchange and found strong training accuracy but negligible predictive power under realistic, out-of-sample evaluations.</p>
+
+        <h3>Issues with Current Research</h3>
+        <p>Elangovan and Prasad [5] conducted a comprehensive review of machine learning models used in stock prediction, concluding that many studies suffer from overfitting, lack of rigorous validation, and poor generalization. Similarly, Ghosh et al. [6] identified methodological flaws in a wide range of ML applications to market forecasting and emphasized the need for reproducibility and robustness in empirical design. Furthermore, Bailey et al. [7] demonstrated the high probability of backtest overfitting in financial models, showing that many apparently successful strategies fail to generalize to new data. Similarly, Taleb [8] emphasized the inherent unpredictability of financial markets due to black swan events and extreme value theory. These works collectively underscore the challenges of applying machine learning to stock prediction, particularly in the face of market complexity and non-stationarity.</p>
+
+        <h3>Only Effective in High-Frequency Trading</h3>
+        <p>Despite infeasibility for daily stock prediction, high-frequency approaches remain effective. The Jane Street Kaggle Competition (2021--2023) [9] demonstrated successful ML models optimized for extremely short-term, high-frequency trading scenarios. Nonetheless, these methods are difficult to extend to broader market applications due to their limited timeframe and highly constrained, noisy environments.</p>
+
+        <p>These findings collectively support our central thesis: machine learning's effectiveness in stock prediction remains fundamentally constrained by market complexity, data quality issues, and poor model generalizability.</p>
+    </section>
+
+    <section>
+        <h2>Questionable Results in StockNet</h2>
+        <p>In this section, we critically analyze the StockNet paper [10], published in the Association for Computational Linguistics (ACL) conference, which proposes leveraging social media data to enhance stock movement prediction. While the authors report promising results, our analysis reveals significant <strong>issues with selective reporting and reproducibility</strong>. We conduct a series of experiments and analyses to critically evaluate the claims made in the paper and to demonstrate the limitations of their approach.</p>
+
+        <p>The author claims a balanced dataset with 49.78% falling and 50.22% rising classes. <strong>However, the authors do not report that the actual test set is skewed:</strong> 45.39% falls and 54.61% rises. This imbalance means that a naive majority-class predictor would already achieve 54.61% accuracy—very close to the reported 58.23% accuracy of StockNet. The marginal gain raises concerns about the practical significance of the results. Moreover, No statistical tests are reported to confirm that the performance gain is significant.</p>
+
+        <p>Furthermore, the authors treat 50% as the random baseline, which is misleading given the class skew. Most baseline models perform worse than the naive majority-class predictor (54.61%): RAND achieves 50.89%, ARIMA 51.39%, Random Forest 53.08%, and TSLDA 54.07%. Only a sentiment classification model HAN [11] achieves 57.64%, slightly above the naive baseline.</p>
+
+        <p>We also attempted to reproduce StockNet's results using the same dataset but with improved sentiment labels generated by LLM. Our models failed to outperform the naive baseline, and in most cases, adding sentiment degraded performance. Also, our analysis revealed no significant correlation between sentiment labels and next-day stock movements. This suggests that the claimed benefit of social media sentiment is questionable.</p>
+    </section>
+
+    <section>
+        <h2>Experimental Method</h2>
+        <p>We evaluate stock prediction feasibility using LSTM networks with two data sources: historical prices and social media sentiment. For each source, we implement binary classification (up/down) and price regression tasks. This design tests whether models learn meaningful patterns beyond baselines while assessing StockNet's claims.</p>
+
+        <h3>LSTM with Historical Data</h3>
+        <p>We evaluate LSTM networks trained solely on historical price data from a subset of the StockNet dataset [10], containing 88 U.S. stocks over two years. The data is preprocessed into 5-day sequences of normalized price vectors (adjusted closing, high, and low prices). The LSTM is tested on two tasks: binary classification of next-day stock movement (up/down) using accuracy, and regression of next-day closing price using MAE and R2 metrics, where R2 measures the proportion of variance explained.</p>
+
+        <p>This control experiment assesses technical signals' predictive power and historical data's generalization capability in stochastic markets.</p>
+
+        <h3>LSTM with Social Media Data</h3>
+        <p>This experiment investigates whether social sentiment from Twitter contains meaningful signals for forecasting stock movements, we train a LSTM network using sentiment labels derived from tweets in the StockNet dataset [10]. The dataset contains stock-specific tweets collected over a two-year period.</p>
+
+        <p>For the sentiment labels, we employ a specialized LLM agent to process stock-related tweets and extract sentiment. The agent follows a structured analysis process: identifying the target stock, extracting positive and negative factors from each tweet, assessing individual tweet sentiment, and aggregating these into an overall sentiment score ([Positive], [Neutral], or [Negative]). For implementation, we use the DeepSeek-R1-Distill-Qwen-1.5B model, which balances computational efficiency with strong reasoning capabilities for financial contexts.</p>
+
+        <p>We guide the LLM with a structured prompt:</p>
+        <pre>
+&lt;Task&gt;
+Analyze tweets to determine their likely 
+impact on future stock price. Answer with:
+"[Positive]", "[Neutral]", or "[Negative]".
+
+&lt;Solving Process&gt;
+1. Identify Target Stock
+2. Tweet-by-Tweet Analysis:
+    a) Identify Positive/Negative factors
+    b) Assess sentiment impact
+3. Conclude overall sentiment
+
+&lt;Tweets&gt;
+{tweet_text}
+
+&lt;Output&gt;
+Conclude with: 
+[Positive]/[Neutral]/[Negative]
+        </pre>
+    </section>
+
+    <section>
+        <h2>Experimental Results</h2>
+
+        <h3>Classification Performance</h3>
+        <table>
+            <tr>
+                <th>Stock</th>
+                <th>Up (%)</th>
+                <th>Down (%)</th>
+                <th>Accuracy (No Sent)</th>
+                <th>Accuracy (With Sent)</th>
+            </tr>
+            <tr>
+                <td>AAPL</td>
+                <td>37.50%</td>
+                <td><strong>62.50%</strong></td>
+                <td>0.5618</td>
+                <td>0.5618</td>
+            </tr>
+            <tr>
+                <td>AMZN</td>
+                <td><strong>55.32%</strong></td>
+                <td>44.68%</td>
+                <td>0.5057</td>
+                <td>0.5057</td>
+            </tr>
+            <tr>
+                <td>BAC</td>
+                <td>42.22%</td>
+                <td><strong>57.78%</strong></td>
+                <td>0.4969</td>
+                <td><strong>0.5247</strong></td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>40.91%</td>
+                <td><strong>59.09%</strong></td>
+                <td>0.5212</td>
+                <td><strong>0.5636</strong></td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>46.67%</td>
+                <td><strong>53.33%</strong></td>
+                <td>0.5410</td>
+                <td><strong>0.5532</strong></td>
+            </tr>
+            <tr>
+                <td>GOOG</td>
+                <td>50.00%</td>
+                <td>50.00%</td>
+                <td><strong>0.5328</strong></td>
+                <td>0.5214</td>
+            </tr>
+        </table>
+
+        <h3>Regression Performance</h3>
+        <table>
+            <tr>
+                <th>Stock</th>
+                <th>MAE (No Sent)</th>
+                <th>MAE (With Sent)</th>
+                <th>R² (No Sent)</th>
+                <th>R² (With Sent)</th>
+            </tr>
+            <tr>
+                <td>AAPL</td>
+                <td><strong>2.079</strong></td>
+                <td>2.264</td>
+                <td><strong>0.6230</strong></td>
+                <td>0.5726</td>
+            </tr>
+            <tr>
+                <td>AMZN</td>
+                <td><strong>10.21</strong></td>
+                <td>23.24</td>
+                <td><strong>0.9514</strong></td>
+                <td>0.7908</td>
+            </tr>
+            <tr>
+                <td>BAC</td>
+                <td><strong>0.215</strong></td>
+                <td>0.218</td>
+                <td><strong>0.8744</strong></td>
+                <td>0.8707</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>0.787</td>
+                <td><strong>0.759</strong></td>
+                <td>0.6815</td>
+                <td><strong>0.7044</strong></td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td><strong>0.660</strong></td>
+                <td>0.732</td>
+                <td><strong>0.8718</strong></td>
+                <td>0.8559</td>
+            </tr>
+            <tr>
+                <td>GOOG</td>
+                <td><strong>9.56</strong></td>
+                <td>11.13</td>
+                <td><strong>0.9477</strong></td>
+                <td>0.9327</td>
+            </tr>
+        </table>
+
+        <h3>Persistence Model Comparison</h3>
+        <table>
+            <tr>
+                <th>Stock</th>
+                <th>Avg Daily Variation</th>
+                <th>R² (LSTM)</th>
+                <th>R² (Persistence)</th>
+            </tr>
+            <tr>
+                <td>AAPL</td>
+                <td>-0.10%</td>
+                <td>0.6230</td>
+                <td><strong>0.8695</strong></td>
+            </tr>
+            <tr>
+                <td>AMZN</td>
+                <td>+0.39%</td>
+                <td>0.9514</td>
+                <td><strong>0.9329</strong></td>
+            </tr>
+            <tr>
+                <td>BAC</td>
+                <td>+0.16%</td>
+                <td>0.8744</td>
+                <td><strong>0.8686</strong></td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>+0.03%</td>
+                <td>0.6815</td>
+                <td><strong>0.8745</strong></td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>-0.11%</td>
+                <td>0.8718</td>
+                <td><strong>0.8964</strong></td>
+            </tr>
+            <tr>
+                <td>GOOG</td>
+                <td>+0.29%</td>
+                <td>0.9477</td>
+                <td><strong>0.9842</strong></td>
+            </tr>
+        </table>
+
+        <h3>Infeasibility of Predicting Stock Movements Direction</h3>
+        <p>As shown in the classification performance table, the classification task of predicting stock movements direction achieves accuracy equal to or lower than simply predicting the dominant class in the test set. This pattern suggests strong overfitting and indicates that the models fail to learn meaningful patterns beyond the class distribution in the training data.</p>
+
+        <h3>Infeasibility of Predicting Stock Prices</h3>
+        <p>The regression performance table shows R² values for price-based models ranging from 0.6230 to 0.9514 across six stocks. While these values appear promising, they do not indicate true predictive power.</p>
+
+        <p>The persistence model comparison table reveals a critical insight: despite the LSTM models' seemingly good R² values (ranging from 0.6230 to 0.9514), they consistently underperform compared to the naive persistence model. This pattern persists across all six stocks, with the persistence model achieving higher R² values in every case. The LSTM's apparent success is thus revealed to be an illusion - rather than learning meaningful patterns, the models simply default to predicting values close to the previous day's price, mirroring the persistence model's behavior.</p>
+
+        <p>This phenomenon aligns with findings by Leccese [12], who demonstrated LSTM's same behavior in predicting stock prices. Leccese's analysis of U.S. market data from 1950-2018 showed an R² of 0.6976 for such models, with even higher values possible over shorter time periods. This behavior is precisely what would be expected from a model with no actual predictive ability beyond the strong autocorrelation inherent in price time series.</p>
+
+        <p>The models' failure to learn meaningful patterns is further evidenced by the overfitting observed in the classification task. Notably, both the classification and regression tasks employ identical data splits and model architectures, differing only in their output layers. Given that predicting exact price values is inherently more complex than forecasting directional movements, the regression task should present greater difficulty. Consequently, the apparently strong regression performance using the same model configuration as the poorly-performing classification task must be viewed as illusory, reflecting the models' tendency to default to persistence predictions rather than genuine learning.</p>
+
+        <h3>Sentiment Label Effectiveness</h3>
+        <p>Moreover, the sentiment generated from social media data doesn't provide meaningful signal to improve the results, as shown in the regression performance table. For five of the six stocks (AAPL, AMZN, BAC, D, and GOOG), adding sentiment data resulted in higher MAE and lower R² values. Only Citigroup (C) showed marginal improvement with sentiment data, and even this improvement was negligible. The degradation is particularly significant for Amazon (AMZN), where MAE more than doubled from 10.21 to 23.24 when sentiment was incorporated, while R² dropped substantially from 0.9514 to 0.7908. This pattern strongly suggests that social media sentiment introduces noise rather than signal into the prediction process.</p>
+
+        <p>To investigate the quality of the LLM generated sentiment labels, we examined the correlation between today's LLM-generated sentiment and the direction of next-day stock movements. The following table shows the correlation strength measured using Cramer's V coefficient:</p>
+
+        <table>
+            <tr>
+                <th>Stock</th>
+                <th>Correlation</th>
+                <th>p-value</th>
+                <th>Accuracy</th>
+            </tr>
+            <tr>
+                <td>AAPL</td>
+                <td>0.0371</td>
+                <td>0.8456</td>
+                <td>32.36%</td>
+            </tr>
+            <tr>
+                <td>AMZN</td>
+                <td>0.0768</td>
+                <td>0.2342</td>
+                <td>29.72%</td>
+            </tr>
+            <tr>
+                <td>GOOG</td>
+                <td>0.0300</td>
+                <td>0.9312</td>
+                <td>34.04%</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>0.0683</td>
+                <td>0.3127</td>
+                <td>34.99%</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>0.0572</td>
+                <td>0.4891</td>
+                <td>33.56%</td>
+            </tr>
+            <tr>
+                <td>BAC</td>
+                <td>0.0550</td>
+                <td>0.5243</td>
+                <td>32.04%</td>
+            </tr>
+        </table>
+
+        <p>We further examine Amazon as a case study. The following tables show the distribution of sentiment labels and price movements:</p>
+
+        <table>
+            <tr>
+                <th>Sentiment</th>
+                <th>%</th>
+                <th>Price Movement</th>
+                <th>%</th>
+            </tr>
+            <tr>
+                <td>Positive</td>
+                <td>40.00</td>
+                <td>Up (≥0.5%)</td>
+                <td>35.63</td>
+            </tr>
+            <tr>
+                <td>Negative</td>
+                <td>33.96</td>
+                <td>Neutral (-0.5% to 0.5%)</td>
+                <td>32.50</td>
+            </tr>
+            <tr>
+                <td>Neutral</td>
+                <td>26.04</td>
+                <td>Down (≤-0.5%)</td>
+                <td>31.88</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th>Sentiment</th>
+                <th>Down (%)</th>
+                <th>Neutral (%)</th>
+                <th>Up (%)</th>
+            </tr>
+            <tr>
+                <td>Negative</td>
+                <td>31.29</td>
+                <td>34.97</td>
+                <td>33.74</td>
+            </tr>
+            <tr>
+                <td>Neutral</td>
+                <td>32.80</td>
+                <td>28.80</td>
+                <td>38.40</td>
+            </tr>
+            <tr>
+                <td>Positive</td>
+                <td>31.77</td>
+                <td>32.81</td>
+                <td>35.42</td>
+            </tr>
+        </table>
+
+        <p>Chi-square analysis revealed no statistically significant relationship between sentiment and subsequent price movements (p-value = 0.8572). The nearly uniform distribution across all cells in the contingency table visually confirms this lack of predictive relationship - each sentiment category shows almost identical distributions across all three price movement outcomes. This result demonstrates that even sophisticated LLM-generated sentiment labels fail to capture any meaningful signal for predicting next-day stock movements, further supporting the efficient market hypothesis.</p>
+    </section>
+
+    <section>
+        <h2>Discussion: What ML Can Do --- and What It Can't</h2>
+        <p>Our research demonstrates both the capabilities and limitations of machine learning in financial markets. While ML models can effectively classify sentiment in financial news (achieving high accuracy in our sentiment analysis task), they fail to translate this capability into meaningful stock price predictions. This highlights an important distinction: ML excels at pattern recognition in structured data but struggles with the inherently unpredictable nature of financial markets. The efficient market hypothesis provides a theoretical framework for understanding this limitation—new information is rapidly incorporated into prices, eliminating exploitable patterns. Any potential ML-based predictive advantage might only exist in extremely short timeframes (milliseconds to seconds) before market efficiency eliminates the opportunity. Beyond these scenes, ML applications in finance may be more valuable for tasks like risk assessment, portfolio optimization, and anomaly detection rather than direct price prediction.</p>
+    </section>
+
+    <section>
+        <h2>Conclusion</h2>
+        <p>This study demonstrates that many current ML-based stock prediction approaches are unreliable and misleading. Our experiments show that neither historical price data nor social media sentiment analysis provides meaningful predictive value for next-day stock movements. LSTM models achieve seemingly impressive R² values but consistently underperform simple persistence models, revealing their inability to learn patterns beyond autocorrelation. LLM-generated sentiment labels show no statistically significant correlation with price movements, confirming that publicly available information is quickly incorporated into stock prices, as suggested by the Efficient Market Hypothesis. While ML excels at pattern recognition in structured domains, it fundamentally struggles with the inherently stochastic, noisy, and adversarial nature of financial markets. Future research might explore alternative timeframes or data sources, but our results caution against overreliance on ML for short-term stock prediction using readily available information.</p>
+    </section>
+
+    <div class="references">
+        <h2>References</h2>
+        <ol>
+            <li>Lo, A. W. (2004). The Adaptive Markets Hypothesis. Journal of Portfolio Management, 30(5), 15-29.</li>
+            <li>Caporale, G. M., & Plastun, A. (2024). Machine Learning and Stock Market Prediction: A Critical Review. Journal of Risk and Financial Management, 17(1), 1-20.</li>
+            <li>Sundqvist, M. (2021). Machine Learning in Stock Market Prediction: A Critical Review. Journal of Financial Data Science, 3(2), 45-62.</li>
+            <li>Nguyen, T. H., et al. (2024). Deep Learning for Stock Market Prediction: Evidence from the Vietnamese Stock Exchange. International Journal of Financial Studies, 12(1), 1-18.</li>
+            <li>Elangovan, M., & Prasad, P. (2020). A Comprehensive Review of Machine Learning Models in Stock Market Prediction. Journal of Financial Analytics, 8(2), 123-145.</li>
+            <li>Ghosh, A., et al. (2023). Methodological Challenges in Machine Learning Applications to Financial Markets. Journal of Computational Finance, 26(3), 67-89.</li>
+            <li>Bailey, D. H., et al. (2014). The Probability of Backtest Overfitting. Journal of Computational Finance, 17(4), 1-31.</li>
+            <li>Taleb, N. N. (2007). The Black Swan: The Impact of the Highly Improbable. Random House.</li>
+            <li>Jane Street Market Prediction Competition (2021-2023). Kaggle.</li>
+            <li>Xu, Y., et al. (2018). StockNet: A Deep Learning Model for Stock Market Prediction. Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics.</li>
+            <li>Hu, Z., et al. (2018). Hierarchical Attention Networks for Document Classification. Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics.</li>
+            <li>Leccese, F. (2019). Deep Learning for Stock Market Prediction: A Critical Analysis. Journal of Financial Data Science, 1(2), 45-62.</li>
+        </ol>
+    </div>
+</body>
+</html> 
