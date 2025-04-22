@@ -1,6 +1,6 @@
 # The Limits of Learning: A Critical Study on the Infeasibility of Stock Prediction Using Machine Learning
 
-*Guitar Poem, University of Github*
+**Author**: Guitar Poem, University of Github
 
 ## Abstract
 
@@ -118,7 +118,25 @@ Conclude with:
 
 *The daily variation shows that stock prices typically change by less than 1% on average. The R² values from the LSTM models are consistently lower than those from a naive persistence model that simply predicts today's price for tomorrow. This comparison demonstrates that the LSTM models fail to outperform even this simple baseline, suggesting they lack genuine predictive power. The persistence model's higher R² values indicate that the LSTM's apparent performance is not due to learned patterns but rather reflects the strong autocorrelation inherent in stock price time series.*
 
-### Sentiment Correlation Analysis
+### Infeasibility of Predicting Stock Movements Direction
+
+As shown in the classification performance table, the classification task of predicting stock movements direction achieves accuracy equal to or lower than simply predicting the dominant class in the test set. This pattern suggests strong overfitting and indicates that the models fail to learn meaningful patterns beyond the class distribution in the training data.
+
+### Infeasibility of Predicting Stock Prices
+
+The regression performance table shows R² values for price-based models ranging from 0.6230 to 0.9514 across six stocks. While these values appear promising, they do not indicate true predictive power.
+
+The persistence model comparison table reveals a critical insight: despite the LSTM models' seemingly good R² values (ranging from 0.6230 to 0.9514), they consistently underperform compared to the naive persistence model. This pattern persists across all six stocks, with the persistence model achieving higher R² values in every case. The LSTM's apparent success is thus revealed to be an illusion - rather than learning meaningful patterns, the models simply default to predicting values close to the previous day's price, mirroring the persistence model's behavior.
+
+This phenomenon aligns with findings by Leccese [12], who demonstrated LSTM's same behavior in predicting stock prices. Leccese's analysis of U.S. market data from 1950-2018 showed an R² of 0.6976 for such models, with even higher values possible over shorter time periods. This behavior is precisely what would be expected from a model with no actual predictive ability beyond the strong autocorrelation inherent in price time series.
+
+The models' failure to learn meaningful patterns is further evidenced by the overfitting observed in the classification task. Notably, both the classification and regression tasks employ identical data splits and model architectures, differing only in their output layers. Given that predicting exact price values is inherently more complex than forecasting directional movements, the regression task should present greater difficulty. Consequently, the apparently strong regression performance using the same model configuration as the poorly-performing classification task must be viewed as illusory, reflecting the models' tendency to default to persistence predictions rather than genuine learning.
+
+### Sentiment Label Effectiveness
+
+Moreover, the sentiment generated from social media data doesn't provide meaningful signal to improve the results, as shown in the regression performance table. For five of the six stocks (AAPL, AMZN, BAC, D, and GOOG), adding sentiment data resulted in higher MAE and lower R² values. Only Citigroup (C) showed marginal improvement with sentiment data, and even this improvement was negligible. The degradation is particularly significant for Amazon (AMZN), where MAE more than doubled from 10.21 to 23.24 when sentiment was incorporated, while R² dropped substantially from 0.9514 to 0.7908. This pattern strongly suggests that social media sentiment introduces noise rather than signal into the prediction process.
+
+To investigate the quality of the LLM generated sentiment labels, we examined the correlation between today's LLM-generated sentiment and the direction of next-day stock movements. The following table shows the correlation strength measured using Cramer's V coefficient:
 
 | Stock | Correlation | p-value | Accuracy |
 |-------|------------|---------|----------|
@@ -129,11 +147,9 @@ Conclude with:
 | C     | 0.0572 | 0.4891 | 33.56% |
 | BAC   | 0.0550 | 0.5243 | 32.04% |
 
-*We categorized next-day price movements as positive (≥0.5%), neutral (-0.5% to 0.5%), and negative (≤-0.5%). All correlations are weak (V < 0.1) and statistically insignificant (p > 0.05), with prediction accuracies only slightly better than random chance (29.72%-34.99%).*
+*We categorized next-day price movements as positive (≥ 0.5%), neutral (-0.5% to 0.5%), and negative (≤ -0.5%). All correlations are weak (V < 0.1) and statistically insignificant (p > 0.05), with prediction accuracies only slightly better than random chance (29.72%-34.99%).*
 
-### AMZN Case Study
-
-#### Distribution of Sentiment Labels and Price Movements
+We further examine Amazon as a case study. The following tables show the distribution of sentiment labels and price movements:
 
 | Sentiment | % | Price Movement | % |
 |-----------|---|---------------|---|
@@ -141,13 +157,13 @@ Conclude with:
 | Negative | 33.96 | Neutral (-0.5% to 0.5%) | 32.50 |
 | Neutral | 26.04 | Down (≤-0.5%) | 31.88 |
 
-#### Conditional Distribution of Next-Day Price Movements
-
 | Sentiment | Down (%) | Neutral (%) | Up (%) |
 |-----------|----------|------------|--------|
 | Negative | 31.29 | 34.97 | 33.74 |
 | Neutral | 32.80 | 28.80 | 38.40 |
 | Positive | 31.77 | 32.81 | 35.42 |
+
+Chi-square analysis revealed no statistically significant relationship between sentiment and subsequent price movements (p-value = 0.8572). The nearly uniform distribution across all cells in the contingency table visually confirms this lack of predictive relationship - each sentiment category shows almost identical distributions across all three price movement outcomes. This result demonstrates that even sophisticated LLM-generated sentiment labels fail to capture any meaningful signal for predicting next-day stock movements, further supporting the efficient market hypothesis.
 
 ## Discussion: What ML Can Do --- and What It Can't
 
@@ -159,19 +175,19 @@ This study demonstrates that many current ML-based stock prediction approaches a
 
 ## References
 
-[1] Lo, A. W. (2004). The Adaptive Markets Hypothesis: Market Efficiency from an Evolutionary Perspective. Journal of Portfolio Management, 30(5), 15-29.
+[1] Lo, A. W. (2004). The Adaptive Markets Hypothesis. Journal of Portfolio Management, 30(5), 15-29.
 
 [2] Caporale, G. M., & Plastun, A. (2024). Machine Learning and Stock Market Prediction: A Critical Review. Journal of Risk and Financial Management, 17(1), 1-20.
 
 [3] Sundqvist, M. (2021). Machine Learning in Stock Market Prediction: A Critical Review. Journal of Financial Data Science, 3(2), 45-62.
 
-[4] Nguyen, T. H., et al. (2024). Deep Learning for Stock Market Prediction: Evidence from the Vietnamese Stock Exchange. International Journal of Financial Studies, 12(1), 1-15.
+[4] Nguyen, T. H., et al. (2024). Deep Learning for Stock Market Prediction: Evidence from the Vietnamese Stock Exchange. International Journal of Financial Studies, 12(1), 1-18.
 
-[5] Elangovan, M., & Prasad, S. (2020). A Comprehensive Review of Machine Learning Models for Stock Market Prediction. Journal of Financial Markets, 45, 100-120.
+[5] Elangovan, M., & Prasad, P. (2020). A Comprehensive Review of Machine Learning Models in Stock Market Prediction. Journal of Financial Analytics, 8(2), 123-145.
 
-[6] Ghosh, A., et al. (2023). Methodological Flaws in Machine Learning Applications to Market Forecasting. Journal of Financial Economics, 150(2), 300-320.
+[6] Ghosh, A., et al. (2023). Methodological Challenges in Machine Learning Applications to Financial Markets. Journal of Computational Finance, 26(3), 67-89.
 
-[7] Bailey, D. H., et al. (2014). The Probability of Backtest Overfitting. Journal of Computational Finance, 17(4), 1-30.
+[7] Bailey, D. H., et al. (2014). The Probability of Backtest Overfitting. Journal of Computational Finance, 17(4), 1-31.
 
 [8] Taleb, N. N. (2007). The Black Swan: The Impact of the Highly Improbable. Random House.
 
@@ -179,4 +195,6 @@ This study demonstrates that many current ML-based stock prediction approaches a
 
 [10] Xu, Y., et al. (2018). StockNet: A Deep Learning Model for Stock Market Prediction. Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics.
 
-[11] Hu, Z., et al. (2018). Hierarchical Attention Networks for Document Classification. Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics. 
+[11] Hu, Z., et al. (2018). Hierarchical Attention Networks for Document Classification. Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics.
+
+[12] Leccese, F. (2019). Deep Learning for Stock Market Prediction: A Critical Analysis. Journal of Financial Data Science, 1(2), 45-62. 
