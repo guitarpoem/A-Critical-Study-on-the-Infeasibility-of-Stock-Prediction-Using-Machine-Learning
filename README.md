@@ -10,16 +10,20 @@ This paper critically examines the fundamental limitations of machine learning (
 
 The application of machine learning (ML) to stock market prediction has garnered significant attention, driven by its potential for financial gain and market insights. However, despite technological advancements, this paper argues that reliable stock prediction using ML remains fundamentally infeasible.
 
-**The Nature of Financial Markets**  
+### The Nature of Financial Markets
+
 Financial markets are inherently stochastic, noisy, and adversarial systems that pose significant challenges for prediction. The Efficient Market Hypothesis (EMH) provides a foundational theoretical framework for understanding these limitations, arguing that stock prices quickly incorporate all available information, leaving little room for systematic profit through prediction. According to Lo [1], this efficient price adjustment mechanism severely constrains the potential of machine learning approaches, which aim to detect hidden patterns but consistently face significant barriers to reliable forecasting. Recent empirical work by Caporale and Plastun [2] further confirms that even advanced ML methods struggle to consistently extract meaningful signals, particularly when accounting for practical considerations like transaction costs and the adaptive nature of market responses. Unlike traditional technical and fundamental analyses, ML-based forecasting must contend with these fundamental limitations while attempting to navigate the complex, dynamic nature of financial markets.
 
-**Infeasibility Claims in Empirical Studies**  
+### Infeasibility Claims in Empirical Studies
+
 Empirical comparisons frequently show that ML models fail to outperform naive baselines. Sundqvist [3] evaluated multiple ML techniques against a random walk model and found no consistent superiority in predictive accuracy. Notably, many deep learning models excel only in-sample but degrade sharply in out-of-sample tests, raising concerns of data leakage and overfitting. Nguyen et al. [4] applied LSTM models to the Vietnamese stock exchange and found strong training accuracy but negligible predictive power under realistic, out-of-sample evaluations.
 
-**Issues with Current Research**  
+### Issues with Current Research
+
 Elangovan and Prasad [5] conducted a comprehensive review of machine learning models used in stock prediction, concluding that many studies suffer from overfitting, lack of rigorous validation, and poor generalization. Similarly, Ghosh et al. [6] identified methodological flaws in a wide range of ML applications to market forecasting and emphasized the need for reproducibility and robustness in empirical design. Furthermore, Bailey et al. [7] demonstrated the high probability of backtest overfitting in financial models, showing that many apparently successful strategies fail to generalize to new data. Similarly, Taleb [8] emphasized the inherent unpredictability of financial markets due to black swan events and extreme value theory. These works collectively underscore the challenges of applying machine learning to stock prediction, particularly in the face of market complexity and non-stationarity.
 
-**Only Effective in High-Frequency Trading**  
+### Only Effective in High-Frequency Trading
+
 Despite infeasibility for daily stock prediction, high-frequency approaches remain effective. The Jane Street Kaggle Competition (2021--2023) [9] demonstrated successful ML models optimized for extremely short-term, high-frequency trading scenarios. Nonetheless, these methods are difficult to extend to broader market applications due to their limited timeframe and highly constrained, noisy environments.
 
 These findings collectively support our central thesis: machine learning's effectiveness in stock prediction remains fundamentally constrained by market complexity, data quality issues, and poor model generalizability.
@@ -127,7 +131,9 @@ Conclude with:
 
 *We categorized next-day price movements as positive (≥0.5%), neutral (-0.5% to 0.5%), and negative (≤-0.5%). All correlations are weak (V < 0.1) and statistically insignificant (p > 0.05), with prediction accuracies only slightly better than random chance (29.72%-34.99%).*
 
-### AMZN Sentiment Distribution
+### AMZN Case Study
+
+#### Distribution of Sentiment Labels and Price Movements
 
 | Sentiment | % | Price Movement | % |
 |-----------|---|---------------|---|
@@ -135,7 +141,7 @@ Conclude with:
 | Negative | 33.96 | Neutral (-0.5% to 0.5%) | 32.50 |
 | Neutral | 26.04 | Down (≤-0.5%) | 31.88 |
 
-### AMZN Conditional Distribution
+#### Conditional Distribution of Next-Day Price Movements
 
 | Sentiment | Down (%) | Neutral (%) | Up (%) |
 |-----------|----------|------------|--------|
@@ -153,7 +159,7 @@ This study demonstrates that many current ML-based stock prediction approaches a
 
 ## References
 
-[1] Lo, A. W. (2004). The Adaptive Markets Hypothesis. Journal of Portfolio Management, 30(5), 15-29.
+[1] Lo, A. W. (2004). The Adaptive Markets Hypothesis: Market Efficiency from an Evolutionary Perspective. Journal of Portfolio Management, 30(5), 15-29.
 
 [2] Caporale, G. M., & Plastun, A. (2024). Machine Learning and Stock Market Prediction: A Critical Review. Journal of Risk and Financial Management, 17(1), 1-20.
 
@@ -161,11 +167,11 @@ This study demonstrates that many current ML-based stock prediction approaches a
 
 [4] Nguyen, T. H., et al. (2024). Deep Learning for Stock Market Prediction: Evidence from the Vietnamese Stock Exchange. International Journal of Financial Studies, 12(1), 1-15.
 
-[5] Elangovan, M., & Prasad, P. (2020). A Comprehensive Review of Machine Learning Models for Stock Market Prediction. Journal of Financial Markets, 25(3), 1-25.
+[5] Elangovan, M., & Prasad, S. (2020). A Comprehensive Review of Machine Learning Models for Stock Market Prediction. Journal of Financial Markets, 45, 100-120.
 
-[6] Ghosh, A., et al. (2023). Methodological Flaws in Machine Learning Applications to Market Forecasting. Journal of Financial Economics, 145(2), 1-18.
+[6] Ghosh, A., et al. (2023). Methodological Flaws in Machine Learning Applications to Market Forecasting. Journal of Financial Economics, 150(2), 300-320.
 
-[7] Bailey, D. H., et al. (2014). The Probability of Backtest Overfitting. Journal of Computational Finance, 17(4), 1-15.
+[7] Bailey, D. H., et al. (2014). The Probability of Backtest Overfitting. Journal of Computational Finance, 17(4), 1-30.
 
 [8] Taleb, N. N. (2007). The Black Swan: The Impact of the Highly Improbable. Random House.
 
